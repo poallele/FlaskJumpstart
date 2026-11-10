@@ -34,6 +34,7 @@ def index():
 
 @app.route('/delete/<int:id>')
 def delete(id):
+
     task_to_delete = Todo.query.get_or_404(id)
     
     try:
@@ -43,8 +44,8 @@ def delete(id):
     except:
         return 'There was a problem deleting that task'
 
-@app.route('/update/<int:id>', methods=['GET', 'POST'])
-def update(id):
+@app.route('/modify/<int:id>', methods=['GET', 'POST'])
+def modify(id):
     task = Todo.query.get_or_404(id)
     
     
