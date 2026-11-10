@@ -13,7 +13,7 @@ th, td {
     text-align: center;
 }
 table {
-    color: rgb(227, 25, 51);
+    color: rgb(0, 0, 0);
     background-color: rgb(255, 255, 255);
     border-collapse: collapse;
     width: 100%;
@@ -42,12 +42,16 @@ h6 {
     font-weight: normal;
 }
 
-
+a {
+    font-weight: normal;
+    color: rgb(255, 210, 0);
+}
 
 img {
+    border: 2px solid rgba(255, 255, 255, 0.1);
     display: block;
     margin: auto;
-    width: 80%;
+    width: 100%;
 }
 
 
@@ -57,5 +61,5 @@ img {
     width: 500px;
 }
 #content {
-    width: 82.684%;
+    width: 82%;
 }
