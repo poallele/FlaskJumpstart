@@ -1,36 +1,61 @@
 body, html {
     margin: 0;
-    font-family: sans-serif;
-    background-color: lightblue;
+    font-family: 'Courier New';
+    background-color: rgb(0, 0, 0);
 }
 
-.content {
-    margin: 0 auto;
-    width: 400px;
-}
 
-table, td, th {
-    border: 1px solid #aaa;
-}
 
+table, th, td {
+    border: 2px solid rgb(255, 210, 0);
+}
+th, td {
+    text-align: center;
+}
 table {
+    color: rgb(227, 25, 51);
+    background-color: rgb(255, 255, 255);
     border-collapse: collapse;
     width: 100%;
 }
-
 th {
-    height: 30px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(227, 25, 51);
 }
-
 td {
-    text-align: center;
     padding: 5px;
 }
 
-.form {
-    margin-top: 20px;
+
+
+h1,h5,h6{
+    color: rgb(255, 255, 255);
+}
+h1 {
+    text-align: center;
+}
+h5,h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+h6 {
+    font-weight: normal;
 }
 
+
+
+img {
+    display: block;
+    margin: auto;
+    width: 80%;
+}
+
+
+
+.content {
+    margin: 0 auto;
+    width: 500px;
+}
 #content {
-    width: 70%;
+    width: 82.684%;
 }
