@@ -6,53 +6,48 @@ body, html {
 
 
 
-table, th, td {
-    border: 2px solid rgb(255, 210, 0);
-}
-th, td {
+
+
+h1 {
+    color: rgb(255, 255, 255);
+    
     text-align: center;
 }
+h6 {
+    color: rgb(255, 255, 255);
+    font-weight: normal;
+
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+
+
+
 table {
     color: rgb(0, 0, 0);
     background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(255, 210, 0);
     border-collapse: collapse;
+    
     width: 100%;
 }
 th {
     color: rgb(255, 255, 255);
     background-color: rgb(227, 25, 51);
+    border: 2px solid rgb(255, 210, 0);
+
+    text-align: center;
 }
 td {
+    border: 2px solid rgb(255, 210, 0);
+    
+    text-align: center;
     padding: 5px;
 }
 
 
-
-h1,h5,h6{
-    color: rgb(255, 255, 255);
-}
-h1 {
-    text-align: center;
-}
-h5,h6 {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-h6 {
-    font-weight: normal;
-}
-
-a {
-    font-weight: normal;
-    color: rgb(255, 210, 0);
-}
-
-img {
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    display: block;
-    margin: auto;
-    width: 100%;
-}
 
 
 
@@ -61,5 +56,22 @@ img {
     width: 500px;
 }
 #content {
-    width: 82%;
+    width: 400px;
+}
+
+
+
+
+
+a {
+    color: rgb(255, 210, 0);
+
+    font-weight: normal;
+}
+img {
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    
+    display: block;
+    margin: auto;
+    width: 100%;
 }

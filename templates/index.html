@@ -7,7 +7,7 @@
 {% block body %}
 <div class="content">
     <h1>flaskjumpstart.onrender.com</h1>
-    <h5>100% FREE TOOLS USED─────────────────────────────────────────\</h5>
+    <h6>100% FREE TOOLS USED────────────────────────────────────────────────────────\</h6>
     <h6>TUTORIAL ...................................                <a href="https://youtube.com/watch?v=Z1RJmh_OqeA">youtube.com/watch?v=Z1RJmh_OqeA</a>│</h6>
     <h6>├─VSCode ....................................               <a href="https://code.visualstudio.com/download">code.visualstudio.com/download</a>│</h6>
     <h6>├─Python ..............................................     <a href="https://python.org/downloads">python.org/downloads</a>│</h6>
@@ -16,27 +16,30 @@
     <h6>├─Render .....................................              <a href="https://dashboard.render.com/register">dashboard.render.com/register</a>│</h6>
     <h6>└───────────────────────────────────────────────────────────────────────────┘</h6>
 
-    {% if tasks|length < 1%}
+    {% if tasksList|length < 1%}
         <br>
-        <h5>There are no tasks. Create one below.</h6>
+        <h6>There are no tasks. Create one below.</h6>
     
     {% else %}
         <br>
         <table>
             <tr>
-                <th>Task</th>
-                <th>Added</th>
-                <th>Actions</th>
+                <th>Task</th>                                       <!--1. This is a comment.-->
+                <th>Added</th>                                      <!--2-->
+                <th>Actions</th>                                    <!--3-->
+                <th>Placeholder</th>                                <!--4-->
             </tr>
-            {% for task in tasks %}
+            {% for i in tasksList %}
                 <tr>
-                    <td>{{ task.content }}</td>
-                    <td>{{ task.date_created.date() }}</td>
-                    <td>
-                        <a href="/delete/{{task.id}}">Delete</a>
+                    <td>{{ i.content }}                  </td>      <!--1-->
+                    <td>{{ i.date_created.date() }}      </td>      <!--2-->
+                    <td>                                            <!--3begin-->
+                        <a href="/delete/{{i.id}}">Delete</a>
                         <br>
-                        <a href="/modify/{{task.id}}">Modify</a>
-                    </td>
+                        <a href="/modify/{{i.id}}">Modify</a>
+                    </td>                                           <!--3end-->
+                    <td>{{ i.date_created.date() }}      </td>      <!--4-->
+                    <td>Test                             </td>      <!--5-->
                 </tr>
             {% endfor %}
         </table>
