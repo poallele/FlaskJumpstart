@@ -28,23 +28,22 @@ h6 {
 table {
     color: rgb(0, 0, 0);
     background-color: rgb(255, 255, 255);
-    border: 2px solid rgb(255, 210, 0);
+    border: 2px solid rgb(102, 102, 102);
     border-collapse: collapse;
     
     width: 100%;
 }
 th {
     color: rgb(255, 255, 255);
-    background-color: rgb(227, 25, 51);
-    border: 2px solid rgb(255, 210, 0);
+    background-color: rgb(81, 35, 127);
+    border: 2px solid rgb(102, 102, 102);
 
     text-align: center;
 }
 td {
-    border: 2px solid rgb(255, 210, 0);
+    border: 2px solid rgb(102, 102, 102);
     
     text-align: center;
-    padding: 5px;
 }
 
 
@@ -56,7 +55,7 @@ td {
     width: 500px;
 }
 #content {
-    width: 400px;
+    width: 300px;
 }
 
 
@@ -64,12 +63,12 @@ td {
 
 
 a {
-    color: rgb(255, 210, 0);
+    color: rgb(0, 149, 200);
 
     font-weight: normal;
 }
 img {
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.05 );
     
     display: block;
     margin: auto;

@@ -6,40 +6,83 @@
 
 {% block body %}
 <div class="content">
-    <h1>flaskjumpstart.onrender.com</h1>
-    <h6>100% FREE TOOLS USED────────────────────────────────────────────────────────\</h6>
-    <h6>TUTORIAL ...................................                <a href="https://youtube.com/watch?v=Z1RJmh_OqeA">youtube.com/watch?v=Z1RJmh_OqeA</a>│</h6>
-    <h6>├─VSCode ....................................               <a href="https://code.visualstudio.com/download">code.visualstudio.com/download</a>│</h6>
-    <h6>├─Python ..............................................     <a href="https://python.org/downloads">python.org/downloads</a>│</h6>
-    <h6>├─Flask. ..................                                 <a href="https://flask.palletsprojects.com/en/stable/installation">flask.palletsprojects.com/en/stable/installation</a>│</h6>
-    <h6>├─GitHub .................................................  <a href="https://github.com/signup">github.com/signup</a>│</h6>
-    <h6>├─Render .....................................              <a href="https://dashboard.render.com/register">dashboard.render.com/register</a>│</h6>
+    <h1>montgomerycollege.ieeeclub.onrender.com</h1>
+    <h6>┌─────────────────────────────────100% FREE─────────────────────────────────┐</h6>
+    <h6>
+        │TUTORIAL ..................................
+        <a
+            href="https://youtube.com/watch?v=Z1RJmh_OqeA">
+            youtube.com/watch?v=Z1RJmh_OqeA</a>│
+    </h6>
+    
+
+    <h6>
+        │├─vscode ...................................
+        <a
+            href="https://code.visualstudio.com/download">
+            code.visualstudio.com/download</a>│
+    </h6>
+    
+    
+    <h6>
+        │├─python .............................................
+        <a
+            href="https://python.org/downloads">
+            python.org/downloads</a>│
+    </h6>
+    
+    
+    <h6>
+        │├─flask. .................
+        <a
+            href="https://flask.palletsprojects.com/en/stable/installation">
+            flask.palletsprojects.com/en/stable/installation</a>│
+    </h6>
+    
+    
+    <h6>
+        │├─github ................................................
+        <a
+            href="https://github.com/signup">
+            github.com/signup</a>│
+    </h6>
+    
+    
+    <h6>
+        │├─render ....................................
+        <a
+            href="https://dashboard.render.com/register">
+            dashboard.render.com/register</a>│
+    </h6>
     <h6>└───────────────────────────────────────────────────────────────────────────┘</h6>
 
-    {% if tasksList|length < 1%}
+    {% if eventsList|length < 1%}
         <br>
-        <h6>There are no tasks. Create one below.</h6>
+        <h6>There are no events. Create one below.</h6>
     
     {% else %}
         <br>
         <table>
             <tr>
-                <th>Task</th>                                       <!--1. This is a comment.-->
-                <th>Added</th>                                      <!--2-->
-                <th>Actions</th>                                    <!--3-->
-                <th>Placeholder</th>                                <!--4-->
+                <th>Event</th>                                      <!--1. This is a comment.-->
+                <th>Room</th>                                       <!--2-->
+                <th>Date & Time</th>                                <!--3-->
+                <th>Comment</th>                                    <!--4-->
+                <th>Actions</th>                                    <!--5-->
             </tr>
-            {% for i in tasksList %}
+            {% for i in eventsList %}
                 <tr>
-                    <td>{{ i.content }}                  </td>      <!--1-->
-                    <td>{{ i.date_created.date() }}      </td>      <!--2-->
-                    <td>                                            <!--3begin-->
+                    <td>{{ i.content }}</td>                        <!--1-->
+                    <td>{{ i.date_created.date() }}</td>                       <!--2-->
+                    <td></td>                                       <!--3-->
+                    <td></td>                                       <!--4-->
+                    <td>                                            <!--begin 5-->
                         <a href="/delete/{{i.id}}">Delete</a>
                         <br>
                         <a href="/modify/{{i.id}}">Modify</a>
-                    </td>                                           <!--3end-->
-                    <td>{{ i.date_created.date() }}      </td>      <!--4-->
-                    <td>Test                             </td>      <!--5-->
+                        <br>
+                        <a href="/metadata/{{i.id}}">Metadata</a>
+                    </td>                                           <!--end 5-->
                 </tr>
             {% endfor %}
         </table>
@@ -47,10 +90,14 @@
 
     <form action="/" method="POST">
         <input type="text" name="content" id="content">
-        <input type="submit" value="Add Task">
+        <input type="submit" value="Add Event">
     </form>
+    <div
+        style="height: 100px;">
+    </div>
+    <img src="https://media.montgomerycollege.edu/communications/marketing-communications-website/mclogos/assets/MClogo-horizontal-purple-blue-RGB-no-background.png">
     <br>
     <br>
-    <img src="https://eng.umd.edu/sites/clark.umd.edu/files/UMD_ENG_Ctr_Color_W.png">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/IEEE_logo.svg">
 </div>
 {% endblock %}

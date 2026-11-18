@@ -40,7 +40,7 @@ db = SQLAlchemy(app)
 # [class Todo(x)]:
 #                 Classes are defined by the user.
 #                 They are used for creating custom data types (objects) that bundle data together.
-#                 In the class 'Todo', there are 3 items bundled together per 'object'.
+#                 In the class 'Todo', there are 3 events bundled together per 'object'.
 #
 # [db.Model]:
 #            'db' is the SQLAlchemy database.
@@ -49,7 +49,7 @@ db = SQLAlchemy(app)
 # [id]:
 #      A
 #
-# [content]:
+# [name]:
 #           A
 #
 # [data_created]:
@@ -57,11 +57,16 @@ db = SQLAlchemy(app)
 ################################################################################
 class Todo(db.Model):
     id              = db.Column     (db.Integer,        primary_key = True)
-    content         = db.Column     (db.String(200),    nullable=False)
+    name            = db.Column     (db.String(200),    nullable=False)
+    room            = db.Column     (db.String(200),    nullable=False)
+    dateandtime     = db.Column     (db.String(200),    nullable=False)
+    comment         = db.Column     (db.String(200),    default=" ")
+    
     date_created    = db.Column     (db.DateTime,       default=datetime.utcnow)
+    added_by        = db.Column     (db.DateTime,       default=datetime.utcnow)
     
     def __repr__(self):
-        return '<Task %r>' % self.id
+        return '<Event %r>' % self.id
 
 
 
@@ -69,53 +74,78 @@ class Todo(db.Model):
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
-        task_content = request.form['content']
-        new_task = Todo(content=task_content)
+        
+        name = request.form['content']
+        room = request.form['content']
+        dateandtime = request.form['content']
+        
+        new_event = Todo(name=name, room=room, dateandtime=dateandtime)
         
         try:
-            db.session.add(new_task)
+            db.session.add(new_event)
             db.session.commit()
             return redirect('/')
         except:
-            return 'There was an issue adding your task'
+            return 'There was an issue adding your event'
         
     else:
-        tasksList = Todo.query.order_by(Todo.date_created).all()
-        return render_template('index.html', tasksList=tasksList)
+        eventsList = Todo.query.order_by(Todo.date_created).all()
+        return render_template('index.html', eventsList=eventsList)
 
 ################################################################################
 @app.route('/delete/<int:id>')
 def delete(id):
 
-    task_to_delete = Todo.query.get_or_404(id)
+    event = Todo.query.get_or_404(id)
     
     try:
-        db.session.delete(task_to_delete)
+        db.session.delete(event)
         db.session.commit()
         return redirect('/')
     except:
-        return 'There was a problem deleting that task'
+        return 'There was a problem deleting that event'
 
 
 
 ################################################################################
 @app.route('/modify/<int:id>', methods=['GET', 'POST'])
 def modify(id):
-    task = Todo.query.get_or_404(id)
+    event = Todo.query.get_or_404(id)
     
     if request.method == 'POST':
-        task.content = request.form['content']
+        event.name = request.form['content']
         try:
             db.session.commit()
             return redirect('/')
         except:
-            return 'There was an issue updating your task'
+            return 'There was an issue updating your event'
     else:
-        return render_template('update.html', task=task)
+        return render_template('modify.html', event=event)
+    
+    
+    
+################################################################################
+@app.route('/metadata/<int:id>', methods=['GET', 'POST'])
+def metadata(id):
+    event = Todo.query.get_or_404(id)
+    
+    if request.method == 'POST':
+        event.name = request.form['content']
+        try:
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'There was an issue updating your event'
+    else:
+        return render_template('metadata.html', event=event)
+
 
 
 ################################################################################
 # Without this, it cannot even run in VSCode when you press the 'Build' button.
 ################################################################################
 if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
+    
     app.run(debug=True)
