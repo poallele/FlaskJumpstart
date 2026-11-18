@@ -9,8 +9,13 @@
     <h1>Modify Event</h1>
 
     <form action="/modify/{{event.id}}" method="POST">
-        <input type="text" name="content" id="content" value="{{event.content}}">
-        <input type="submit" value="Modify Event">
+        <input type="text" name="content" id="content" value={{event.name}}>
+        <input type="text" room="content" id="content" value={{event.room}}>
+        <input type="text" date="content" id="content" value={{event.date}}>
+        <input type="text" time="content" id="content" value={{event.time}}>
+        <input type="text" comment="content" id="content" value={{event.comment}}>
+        
+        <input type="submit" value="Modify All Fields" style="color: black">
     </form>
 </div>
 {% endblock %}

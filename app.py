@@ -59,8 +59,9 @@ class Todo(db.Model):
     id              = db.Column     (db.Integer,        primary_key = True)
     name            = db.Column     (db.String(200),    nullable=False)
     room            = db.Column     (db.String(200),    nullable=False)
-    dateandtime     = db.Column     (db.String(200),    nullable=False)
-    comment         = db.Column     (db.String(200),    default=" ")
+    date            = db.Column     (db.String(200),    nullable=False)
+    time            = db.Column     (db.String(200),    nullable=False)
+    comment         = db.Column     (db.String(200),    default="")
     
     date_created    = db.Column     (db.DateTime,       default=datetime.utcnow)
     added_by        = db.Column     (db.DateTime,       default=datetime.utcnow)
@@ -77,9 +78,11 @@ def index():
         
         name = request.form['content']
         room = request.form['content']
-        dateandtime = request.form['content']
+        date = request.form['content']
+        time = request.form['content']
+        comment = request.form['content']
         
-        new_event = Todo(name=name, room=room, dateandtime=dateandtime)
+        new_event = Todo(name=name, room=room, date=date, time=time, comment=comment)
         
         try:
             db.session.add(new_event)
@@ -113,7 +116,13 @@ def modify(id):
     event = Todo.query.get_or_404(id)
     
     if request.method == 'POST':
+        
         event.name = request.form['content']
+        event.room = request.form['content']
+        event.date = request.form['content']
+        event.time = request.form['content']
+        event.comment = request.form['content']
+        
         try:
             db.session.commit()
             return redirect('/')
@@ -130,7 +139,13 @@ def metadata(id):
     event = Todo.query.get_or_404(id)
     
     if request.method == 'POST':
+        
         event.name = request.form['content']
+        event.room = request.form['content']
+        event.date = request.form['content']
+        event.time = request.form['content']
+        event.comment = request.form['content']
+        
         try:
             db.session.commit()
             return redirect('/')
