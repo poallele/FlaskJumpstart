@@ -6,8 +6,27 @@
 
 {% block body %}
 <div class="content">
-    <h1>montgomerycollege.ieeeclub.onrender.com</h1>
-    <h1>github.com/poallele/FlaskJumpstart</h1>
+    
+    <div
+        style="height: 50px;">
+    </div>
+    
+
+    <h2>github.com/poallele/FlaskJumpstart</h2>
+    <h6>Contact:</h6>
+    <h6>-
+        <a
+            href="mailto:ismith43@montgomerycollege.edu">
+            president</a>
+    </h6>
+    <h6>-
+        <a
+            href="mailto:ismith43@montgomerycollege.edu">
+            site developer</a>
+    </h6>
+    
+    <br>
+    
     <h6>┌─────────────────────────────────100% FREE─────────────────────────────────┐</h6>
     <h6>
         │TUTORIAL ..................................
@@ -80,11 +99,20 @@
                     <td>{{ i.time }}</td>                           <!--4-->
                     <td>{{ i.comment }} </td>                       <!--5-->
                     <td>                                            <!--begin 6-->
-                        <a href="/delete/{{i.id}}">Delete</a>
+                        <a
+                            style="color: rgb(81, 35, 127)"
+                            href="/delete/{{i.id}}">Delete</a>
+                        
                         <br>
-                        <a href="/modify/{{i.id}}">Modify</a>
+                        
+                        <a
+                            style="color: rgb(81, 35, 127)"
+                            href="/modify/{{i.id}}">Modify</a>
                         <br>
-                        <a href="/metadata/{{i.id}}">Metadata</a>
+                        
+                        <a
+                            style="color: rgb(81, 35, 127)"
+                            href="/metadata/{{i.id}}">Metadata</a>
                     </td>                                           <!--end 6-->
                 </tr>
             {% endfor %}
