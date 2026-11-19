@@ -67,38 +67,72 @@
             <tr>
                 <th>Event</th>                                      <!--1. This is a comment.-->
                 <th>Room</th>                                       <!--2-->
-                <th>Date</th>                                <!--3-->
-                <th>Time</th>                                <!--3-->
-                <th>Comment</th>                                    <!--4-->
-                <th>Actions</th>                                    <!--5-->
+                <th>Date</th>                                       <!--3-->
+                <th>Time</th>                                       <!--4-->
+                <th>Comment</th>                                    <!--5-->
+                <th>Actions</th>                                    <!--6-->
             </tr>
             {% for i in eventsList %}
                 <tr>
-                    <td>{{ i.name }}</td>                        <!--1-->
-                    <td>{{ i.room }}</td>                       <!--2-->
-                    <td>{{ i.date }}</td>                                       <!--3-->
-                    <td>{{ i.time }}</td>                                       <!--3-->
-                    <td>{{ i.comment }} </td>                                       <!--4-->
-                    <td>                                            <!--begin 5-->
+                    <td>{{ i.name }}</td>                           <!--1-->
+                    <td>{{ i.room }}</td>                           <!--2-->
+                    <td>{{ i.date }}</td>                           <!--3-->
+                    <td>{{ i.time }}</td>                           <!--4-->
+                    <td>{{ i.comment }} </td>                       <!--5-->
+                    <td>                                            <!--begin 6-->
                         <a href="/delete/{{i.id}}">Delete</a>
                         <br>
                         <a href="/modify/{{i.id}}">Modify</a>
                         <br>
                         <a href="/metadata/{{i.id}}">Metadata</a>
-                    </td>                                           <!--end 5-->
+                    </td>                                           <!--end 6-->
                 </tr>
             {% endfor %}
         </table>
     {% endif %}
 
     <form action="/" method="POST">
-        <input type="text" name="content" id="content" value="name">
-        <input type="text" room="content" id="content" value="room">
-        <input type="text" date="content" id="content" value="date">
-        <input type="text" time="content" id="content" value="time">
-        <input type="text" comment="content" id="content" value="comment">
         
-        <input type="submit" value="Add All Fields" style="color: black">
+        <input
+            type="text"
+            id="content"
+            placeholder="name"
+            
+            name="name">
+        
+        <input
+            type="text"
+            id="content"
+            placeholder="room"
+            
+            name="room">
+        
+        <input
+            type="text"
+            id="content"
+            placeholder="date"
+            
+            name="date">
+        
+        <input
+            type="text"
+            id="content"
+            placeholder="time"
+            
+            name="time">
+        
+        <input
+            type="text"
+            id="content"
+            placeholder="comment"
+            
+            name="comment">
+        
+        <input
+            type="submit"
+            value="Add All Fields"
+            style="color: black">
+    
     </form>
     
     <div

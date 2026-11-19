@@ -57,14 +57,14 @@ db = SQLAlchemy(app)
 ################################################################################
 class Todo(db.Model):
     id              = db.Column     (db.Integer,        primary_key = True)
-    name            = db.Column     (db.String(200),    nullable=False)
-    room            = db.Column     (db.String(200),    nullable=False)
-    date            = db.Column     (db.String(200),    nullable=False)
-    time            = db.Column     (db.String(200),    nullable=False)
+    name            = db.Column     (db.String(200),    default="")
+    room            = db.Column     (db.String(200),    default="")
+    date            = db.Column     (db.String(200),    default="")
+    time            = db.Column     (db.String(200),    default="")
     comment         = db.Column     (db.String(200),    default="")
     
     date_created    = db.Column     (db.DateTime,       default=datetime.utcnow)
-    added_by        = db.Column     (db.DateTime,       default=datetime.utcnow)
+    added_by        = db.Column     (db.String(200),    default="Administrator")
     
     def __repr__(self):
         return '<Event %r>' % self.id
@@ -76,13 +76,18 @@ class Todo(db.Model):
 def index():
     if request.method == 'POST':
         
-        name = request.form['content']
-        room = request.form['content']
-        date = request.form['content']
-        time = request.form['content']
-        comment = request.form['content']
+        name = request.form['name']
+        room = request.form['room']
+        date = request.form['date']
+        time = request.form['time']
+        comment = request.form['comment']
         
-        new_event = Todo(name=name, room=room, date=date, time=time, comment=comment)
+        new_event = Todo(
+            name=name,
+            room=room,
+            date=date,
+            time=time,
+            comment=comment)
         
         try:
             db.session.add(new_event)
@@ -117,11 +122,11 @@ def modify(id):
     
     if request.method == 'POST':
         
-        event.name = request.form['content']
-        event.room = request.form['content']
-        event.date = request.form['content']
-        event.time = request.form['content']
-        event.comment = request.form['content']
+        event.name = request.form['name']
+        event.room = request.form['room']
+        event.date = request.form['date']
+        event.time = request.form['time']
+        event.comment = request.form['comment']
         
         try:
             db.session.commit()
@@ -140,11 +145,11 @@ def metadata(id):
     
     if request.method == 'POST':
         
-        event.name = request.form['content']
-        event.room = request.form['content']
-        event.date = request.form['content']
-        event.time = request.form['content']
-        event.comment = request.form['content']
+        event.name = request.form['name']
+        event.room = request.form['room']
+        event.date = request.form['date']
+        event.time = request.form['time']
+        event.comment = request.form['comment']
         
         try:
             db.session.commit()
