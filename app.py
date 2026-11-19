@@ -73,7 +73,7 @@ class Todo(db.Model):
 
 ################################################################################
 @app.route('/', methods=['POST', 'GET'])
-def index():
+def add():
     if request.method == 'POST':
         
         name = request.form['name']
