@@ -93,24 +93,21 @@
             </tr>
             {% for i in eventsList %}
                 <tr>
-                    <td>{{ i.name }}</td>                           <!--1-->
+                    
+                    <td>{{ i.eventname }}</td>                      <!--1-->
                     <td>{{ i.room }}</td>                           <!--2-->
                     <td>{{ i.date }}</td>                           <!--3-->
                     <td>{{ i.time }}</td>                           <!--4-->
                     <td>{{ i.comment }} </td>                       <!--5-->
-                    <td>                                            <!--begin 6-->
-                        <a
-                            href="/delete/{{i.id}}">Delete</a>
+                    
+                    <td>                                            <!--6 begin-->
+                        <a href="/delete/{{i.id}}">Delete</a><br>
                         
-                        <br>
+                        <a href="/modify/{{i.id}}">Modify</a><br>
                         
-                        <a
-                            href="/modify/{{i.id}}">Modify</a>
-                        <br>
-                        
-                        <a
-                            href="/metadata/{{i.id}}">Metadata</a>
-                    </td>                                           <!--end 6-->
+                        <a href="/metadata/{{i.id}}">Metadata</a>
+                    </td>                                           <!--6 end-->
+                
                 </tr>
             {% endfor %}
         </table>
@@ -123,7 +120,7 @@
             id="content"
             placeholder="name"
             
-            name="name">
+            name="eventname">
         
         <input
             type="text"

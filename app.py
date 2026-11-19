@@ -57,7 +57,7 @@ db = SQLAlchemy(app)
 ################################################################################
 class Todo(db.Model):
     id              = db.Column     (db.Integer,        primary_key = True)
-    name            = db.Column     (db.String(200),    default="")
+    eventname       = db.Column     (db.String(200),    default="")
     room            = db.Column     (db.String(200),    default="")
     date            = db.Column     (db.String(200),    default="")
     time            = db.Column     (db.String(200),    default="")
@@ -76,14 +76,14 @@ class Todo(db.Model):
 def add():
     if request.method == 'POST':
         
-        name = request.form['name']
-        room = request.form['room']
-        date = request.form['date']
-        time = request.form['time']
-        comment = request.form['comment']
+        eventname   = request.form['eventname']
+        room        = request.form['room']
+        date        = request.form['date']
+        time        = request.form['time']
+        comment     = request.form['comment']
         
         new_event = Todo(
-            name=name,
+            eventname=eventname,
             room=room,
             date=date,
             time=time,
@@ -122,11 +122,11 @@ def modify(id):
     
     if request.method == 'POST':
         
-        event.name = request.form['name']
-        event.room = request.form['room']
-        event.date = request.form['date']
-        event.time = request.form['time']
-        event.comment = request.form['comment']
+        event.eventname = request.form['eventname']
+        event.room      = request.form['room']
+        event.date      = request.form['date']
+        event.time      = request.form['time']
+        event.comment   = request.form['comment']
         
         try:
             db.session.commit()
@@ -145,11 +145,11 @@ def metadata(id):
     
     if request.method == 'POST':
         
-        event.name = request.form['name']
-        event.room = request.form['room']
-        event.date = request.form['date']
-        event.time = request.form['time']
-        event.comment = request.form['comment']
+        event.eventname = request.form['eventname']
+        event.room      = request.form['room']
+        event.date      = request.form['date']
+        event.time      = request.form['time']
+        event.comment   = request.form['comment']
         
         try:
             db.session.commit()
