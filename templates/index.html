@@ -27,7 +27,7 @@
     
     <br>
     
-    <h6>┌─────────────────────────────────100% FREE─────────────────────────────────┐</h6>
+    <h6>┌────────────────────────────100% FREE TOOLS USED───────────────────────────┐</h6>
     <h6>
         │TUTORIAL ..................................
         <a
@@ -75,7 +75,7 @@
             dashboard.render.com/register</a>│
     </h6>
     <h6>└───────────────────────────────────────────────────────────────────────────┘</h6>
-
+    
     {% if eventsList|length < 1%}
         <br>
         <h6>There are no events. Create one below.</h6>
@@ -151,10 +151,17 @@
             name="comment">
         
         <input
+            type="text"
+            id="content"
+            placeholder="added by"
+            
+            name="added_by">
+        
+        <input
             type="submit"
             value="Add All Fields"
             style="color: black">
-    
+
     </form>
     
     <div

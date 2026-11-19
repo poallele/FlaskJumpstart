@@ -62,9 +62,9 @@ class Todo(db.Model):
     date            = db.Column     (db.String(200),    default="")
     time            = db.Column     (db.String(200),    default="")
     comment         = db.Column     (db.String(200),    default="")
+    added_by        = db.Column     (db.String(200),    default="")
     
     date_created    = db.Column     (db.DateTime,       default=datetime.utcnow)
-    added_by        = db.Column     (db.String(200),    default="Administrator")
     
     def __repr__(self):
         return '<Event %r>' % self.id
@@ -81,13 +81,15 @@ def add():
         date        = request.form['date']
         time        = request.form['time']
         comment     = request.form['comment']
+        added_by    = request.form['comment']
         
         new_event = Todo(
             eventname=eventname,
             room=room,
             date=date,
             time=time,
-            comment=comment)
+            comment=comment,
+            added_by=added_by)
         
         try:
             db.session.add(new_event)
@@ -127,6 +129,7 @@ def modify(id):
         event.date      = request.form['date']
         event.time      = request.form['time']
         event.comment   = request.form['comment']
+        event.added_by  = request.form['comment']
         
         try:
             db.session.commit()
@@ -150,6 +153,7 @@ def metadata(id):
         event.date      = request.form['date']
         event.time      = request.form['time']
         event.comment   = request.form['comment']
+        event.added_by  = request.form['comment']
         
         try:
             db.session.commit()
