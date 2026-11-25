@@ -34,20 +34,20 @@ class Todo(db.Model):
 def login():
     if request.method == 'POST':
         if not ADMIN_HASH:
-            return "FAIL: ADMIN_HASH is empty/None"
+            return "Server error: ADMIN_PASSWORD_HASH is not set."
 
         username = request.form.get('username', '')
         password = request.form.get('password', '')
 
-        if username != ADMIN_USERNAME:
-            return f"FAIL: Username mismatch. Typed '{username}', expected '{ADMIN_USERNAME}'"
+        if username == ADMIN_USERNAME:
+            try:
+                if ph.verify(ADMIN_HASH.strip(), password):
+                    session['admin'] = True
+                    return redirect('/')
+            except VerifyMismatchError:
+                pass
 
-        try:
-            ph.verify(ADMIN_HASH.strip(), password)
-            session['admin'] = True
-            return redirect('/')
-        except Exception as e:
-            return f"FAIL: Argon2 error -> {type(e).__name__}: {e} | Hash len: {len(ADMIN_HASH)}"
+        return 'Invalid login.'
 
     return render_template('login.html')
 
