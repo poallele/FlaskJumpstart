@@ -13,6 +13,9 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", "local-dev-only-key")
 ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
 ADMIN_HASH = os.environ.get("ADMIN_PASSWORD_HASH") or ph.hash("local-dev-password")
 
+# Temporary debug line - check your Render "Logs" tab after deploying!
+print("DEBUG ENV KEYS:", [k for k in os.environ.keys() if "ADMIN" in k or "FLASK" in k])
+
 db = SQLAlchemy(app)
 
 ################################################################################
@@ -30,6 +33,10 @@ class Todo(db.Model):
 @app.route('/login/', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
+        
+        if not ADMIN_HASH:
+            return "ERROR: Render did NOT load ADMIN_PASSWORD_HASH!"
+        
         username = request.form['username']
         password = request.form['password']
 
