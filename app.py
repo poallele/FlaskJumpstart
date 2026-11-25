@@ -1,103 +1,81 @@
-###################################################################################################
-# [from flask import Flask]:
-#                           Import the 'Flask' class.
-#                           An instance of this class will be our Web Server Gateway Interface application.
-###################################################################################################
-from flask import Flask
-from flask import render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
+import os
 
-
-
-###################################################################################################
-# [app = Flask(x)]:
-#                  Create an instance of the 'Flask' class.
-#                  The first argument is the name of the application’s module or package.
-#
-# [__name__]:
-#            Since there is no main() function in Python,
-#            when the command to run a python program is given to the interpreter,
-#            the code that is at level 0 indentation is to be executed.
-#            However, before doing that, it will define a few special variables.
-#                   
-#            __name__ is one such special variable.
-#
-#            If the source file is executed as the main program,
-#            the interpreter sets the __name__ variable to have a value "__main__".
-#            If this file is being imported from another module,
-#            __name__ will be set to the module's name.
-#                   
-#            __name__ is needed so that Flask knows where to look for resources such as templates and static files.
-################################################################################
+ph = PasswordHasher()
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///events.db'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "local-dev-only-key")
+ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
+ADMIN_HASH = os.environ.get("ADMIN_PASSWORD_HASH") or ph.hash("local-dev-password")
+
 db = SQLAlchemy(app)
 
-
-################################################################################
-# [class Todo(x)]:
-#                 Classes are defined by the user.
-#                 They are used for creating custom data types (objects) that bundle data together.
-#                 In the class 'Todo', there are 3 events bundled together per 'object'.
-#
-# [db.Model]:
-#            'db' is the SQLAlchemy database.
-#            'Model' is a SQLAlchemy declarative model class;
-#            subclass this to define database models.
-# [id]:
-#      A
-#
-# [name]:
-#           A
-#
-# [data_created]:
-#                A
 ################################################################################
 class Todo(db.Model):
-    id              = db.Column     (db.Integer,        primary_key = True)
-    eventname       = db.Column     (db.String(200),    default="")
-    room            = db.Column     (db.String(200),    default="")
-    date            = db.Column     (db.String(200),    default="")
-    time            = db.Column     (db.String(200),    default="")
-    comment         = db.Column     (db.String(200),    default="")
-    added_by        = db.Column     (db.String(200),    default="")
-    
-    date_created    = db.Column     (db.DateTime,       default=datetime.utcnow)
-    
-    def __repr__(self):
-        return '<Event %r>' % self.id
+    id           = db.Column(db.Integer, primary_key=True)
+    eventname    = db.Column(db.String(200), default="")
+    room         = db.Column(db.String(200), default="")
+    date         = db.Column(db.String(200), default="")
+    time         = db.Column(db.String(200), default="")
+    comment      = db.Column(db.String(200), default="")
+    added_by     = db.Column(db.String(200), default="")
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
+################################################################################
+@app.route('/login/', methods=['POST', 'GET'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        if username == ADMIN_USERNAME:
+            try:
+                if ph.verify(ADMIN_HASH, password):
+                    session['admin'] = True
+                    return redirect('/')
+            except VerifyMismatchError:
+                pass
+
+        return 'Invalid login.'
+
+    return render_template('login.html')
 
 
 ################################################################################
+@app.route('/logout/')
+def logout():
+    session.pop('admin', None)
+    return redirect('/')
+
+
+################################################################################################################################################################
 @app.route('/', methods=['POST', 'GET'])
 def add():
     if request.method == 'POST':
-        
-        eventname   = request.form['eventname']
-        room        = request.form['room']
-        date        = request.form['date']
-        time        = request.form['time']
-        comment     = request.form['comment']
-        added_by    = request.form['comment']
-        
+        if not session.get('admin'):
+            return redirect('/login/')
+
         new_event = Todo(
-            eventname=eventname,
-            room=room,
-            date=date,
-            time=time,
-            comment=comment,
-            added_by=added_by)
-        
+            eventname=request.form['eventname'],
+            room=request.form['room'],
+            date=request.form['date'],
+            time=request.form['time'],
+            comment=request.form['comment'],
+            added_by=request.form['comment']
+        )
+
         try:
             db.session.add(new_event)
             db.session.commit()
             return redirect('/')
         except:
             return 'There was an issue adding your event'
-        
+
     else:
         eventsList = Todo.query.order_by(Todo.date_created).all()
         return render_template('index.html', eventsList=eventsList)
@@ -105,9 +83,11 @@ def add():
 ################################################################################
 @app.route('/delete/<int:id>')
 def delete(id):
+    if not session.get('admin'):
+        return redirect('/login/')
 
     event = Todo.query.get_or_404(id)
-    
+
     try:
         db.session.delete(event)
         db.session.commit()
@@ -115,22 +95,22 @@ def delete(id):
     except:
         return 'There was a problem deleting that event'
 
-
-
 ################################################################################
 @app.route('/modify/<int:id>', methods=['GET', 'POST'])
 def modify(id):
+    if not session.get('admin'):
+        return redirect('/login/')
+
     event = Todo.query.get_or_404(id)
-    
+
     if request.method == 'POST':
-        
         event.eventname = request.form['eventname']
         event.room      = request.form['room']
         event.date      = request.form['date']
         event.time      = request.form['time']
         event.comment   = request.form['comment']
         event.added_by  = request.form['comment']
-        
+
         try:
             db.session.commit()
             return redirect('/')
@@ -138,23 +118,23 @@ def modify(id):
             return 'There was an issue updating your event'
     else:
         return render_template('modify.html', event=event)
-    
-    
-    
+
 ################################################################################
 @app.route('/metadata/<int:id>', methods=['GET', 'POST'])
 def metadata(id):
     event = Todo.query.get_or_404(id)
-    
+
     if request.method == 'POST':
-        
+        if not session.get('admin'):
+            return redirect('/login/')
+
         event.eventname = request.form['eventname']
         event.room      = request.form['room']
         event.date      = request.form['date']
         event.time      = request.form['time']
         event.comment   = request.form['comment']
         event.added_by  = request.form['comment']
-        
+
         try:
             db.session.commit()
             return redirect('/')
@@ -163,13 +143,12 @@ def metadata(id):
     else:
         return render_template('metadata.html', event=event)
 
-
-
-################################################################################
-# Without this, it cannot even run in VSCode when you press the 'Build' button.
 ################################################################################
 if __name__ == "__main__":
+    
+    #python -m pip freeze > requirements.txt
+    
     with app.app_context():
         db.create_all()
-    
+
     app.run(debug=True)

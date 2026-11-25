@@ -6,10 +6,14 @@
 
 {% block body %}
 <div class="content">
-    
-    <div
-        style="height: 50px;">
-    </div>
+
+
+    {% if session.get('admin') %}
+        <a href="/logout/">Logout</a>
+    {% else %}
+        <a href="/login/">Login</a>
+    {% endif %}
+
     
 
     <h2>github.com/poallele/FlaskJumpstart</h2>
@@ -100,14 +104,16 @@
                     <td>{{ i.time }}</td>                           <!--4-->
                     <td>{{ i.comment }} </td>                       <!--5-->
                     
-                    <td>                                            <!--6 begin-->
-                        <a href="/delete/{{i.id}}">Delete</a><br>
-                        
-                        <a href="/modify/{{i.id}}">Modify</a><br>
-                        
-                        <a href="/metadata/{{i.id}}">Metadata</a>
-                    </td>                                           <!--6 end-->
-                
+                    <td>                                            <!--6-->
+                        <a href="/metadata/{{ i.id }}">Metadata</a>
+                        {% if session.get('admin') %}
+                            <br>
+                            <a href="/delete/{{ i.id }}">Delete</a>
+                            <br>
+                            <a href="/modify/{{ i.id }}">Modify</a>
+                        {% endif %}
+                    </td>                                           <!--6-->
+
                 </tr>
             {% endfor %}
         </table>
