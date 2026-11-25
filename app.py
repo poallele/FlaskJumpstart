@@ -33,24 +33,24 @@ class Todo(db.Model):
 @app.route('/login/', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
-        
         if not ADMIN_HASH:
-            return "ERROR: Render did NOT load ADMIN_PASSWORD_HASH!"
-        
-        username = request.form['username']
-        password = request.form['password']
+            return "FAIL: ADMIN_HASH is empty/None"
 
-        if username == ADMIN_USERNAME:
-            try:
-                if ph.verify(ADMIN_HASH, password):
-                    session['admin'] = True
-                    return redirect('/')
-            except VerifyMismatchError:
-                pass
+        username = request.form.get('username', '')
+        password = request.form.get('password', '')
 
-        return 'Invalid login.'
+        if username != ADMIN_USERNAME:
+            return f"FAIL: Username mismatch. Typed '{username}', expected '{ADMIN_USERNAME}'"
+
+        try:
+            ph.verify(ADMIN_HASH.strip(), password)
+            session['admin'] = True
+            return redirect('/')
+        except Exception as e:
+            return f"FAIL: Argon2 error -> {type(e).__name__}: {e} | Hash len: {len(ADMIN_HASH)}"
 
     return render_template('login.html')
+
 
 
 ################################################################################
@@ -154,6 +154,8 @@ def metadata(id):
 if __name__ == "__main__":
     
     #python -m pip freeze > requirements.txt
+    #python -c "import secrets; from argon2 import PasswordHasher; print('FLASK_SECRET_KEY:', secrets.token_hex(32)); print('ADMIN_PASSWORD_HASH:', PasswordHasher().hash('PUT_YOUR_REAL_PASSWORD_HERE'))"
+
     
     with app.app_context():
         db.create_all()
