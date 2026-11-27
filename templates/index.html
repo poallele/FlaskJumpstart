@@ -7,14 +7,14 @@
 {% block body %}
 <div class="content">
 
-
     {% if session.get('admin') %}
-        <a href="/logout/">Logout</a>
-    {% else %}
-        <a href="/login/">Login</a>
+        <h6>
+            <a
+                href="/logout/">
+                LOGOUT
+            </a>
+        </h6>
     {% endif %}
-
-    
 
     <h2>github.com/poallele/FlaskJumpstart</h2>
     <h6>Contact:</h6>
@@ -31,9 +31,9 @@
     
     <br>
     
-    <h6>┌────────────────────────────100% FREE TOOLS USED───────────────────────────┐</h6>
+    <h6>┌───────────────────────100% FREE TOOLS USED──────────────────────┐</h6>
     <h6>
-        │TUTORIAL ..................................
+        │TUTORIAL ........................
         <a
             href="https://youtube.com/watch?v=Z1RJmh_OqeA">
             youtube.com/watch?v=Z1RJmh_OqeA</a>│
@@ -41,7 +41,7 @@
     
 
     <h6>
-        │├─vscode ...................................
+        │├─vscode .........................
         <a
             href="https://code.visualstudio.com/download">
             code.visualstudio.com/download</a>│
@@ -49,7 +49,7 @@
     
     
     <h6>
-        │├─python .............................................
+        │├─python ...................................
         <a
             href="https://python.org/downloads">
             python.org/downloads</a>│
@@ -57,7 +57,7 @@
     
     
     <h6>
-        │├─flask. .................
+        │├─flask. .......
         <a
             href="https://flask.palletsprojects.com/en/stable/installation">
             flask.palletsprojects.com/en/stable/installation</a>│
@@ -65,7 +65,7 @@
     
     
     <h6>
-        │├─github ................................................
+        │├─github ......................................
         <a
             href="https://github.com/signup">
             github.com/signup</a>│
@@ -73,12 +73,12 @@
     
     
     <h6>
-        │├─render ....................................
+        │├─render ..........................
         <a
             href="https://dashboard.render.com/register">
             dashboard.render.com/register</a>│
     </h6>
-    <h6>└───────────────────────────────────────────────────────────────────────────┘</h6>
+    <h6>└─────────────────────────────────────────────────────────────────┘</h6>
     
     {% if eventsList|length < 1%}
         <br>
