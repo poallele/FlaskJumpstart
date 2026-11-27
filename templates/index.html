@@ -7,30 +7,137 @@
 {% block body %}
 <div class="content">
 
-    {% if session.get('admin') %}
-        <h6>
+    <img style="width: 66%" src="https://media.montgomerycollege.edu/communications/marketing-communications-website/mclogos/assets/MClogo-horizontal-purple-blue-RGB-no-background.png">
+    <img style="width: 32%" src="https://www.vectorlogo.zone/logos/ieee/ieee-ar21.svg">
+    
+    {% if eventsList|length < 1%}
+        <br>
+        <h6>There are no events. Create one below.</h6>
+    
+    {% else %}
+        <br>
+        <table>
+            <tr>
+                <th>Event</th>                                      <!--1. This is a comment.-->
+                <th>Room</th>                                       <!--2-->
+                <th>Date</th>                                       <!--3-->
+                <th>Time</th>                                       <!--4-->
+                <th>Comment</th>                                    <!--5-->
+                <th>Actions</th>                                    <!--6-->
+            </tr>
+            {% for i in eventsList %}
+                <tr>
+                    
+                    <td>{{ i.eventname }}</td>                      <!--1-->
+                    <td>{{ i.room }}</td>                           <!--2-->
+                    <td>{{ i.date }}</td>                           <!--3-->
+                    <td>{{ i.time }}</td>                           <!--4-->
+                    <td>{{ i.comment }} </td>                       <!--5-->
+                    
+                    <td>                                            <!--6-->
+                        <a
+                            href="/up/{{ i.id }}"
+                            style="text-decoration: none; color: rgb(102, 102, 102)">
+                            ▲
+                        </a><br>
+
+                        {% if session.get('admin') %}
+                            <a
+                                href="/delete/{{ i.id }}">
+                                DELETE
+                            </a><br>
+
+                            <a
+                                href="/modify/{{ i.id }}">
+                                MODIFY
+                            </a><br>
+                        {% endif %}
+                        <a
+                            href="/metadata/{{ i.id }}">
+                            METADATA
+                        </a><br>
+
+                        <a
+                            href="/down/{{ i.id }}"
+                            style="text-decoration: none; color: rgb(102, 102, 102)">
+                            ▼
+                        </a>
+                    </td>                                           <!--6-->
+
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    <div style="height: 2px;"></div>
+
+
+    <form action="/" method="POST">
+        
+        <input
+            type="text"
+            id="content"
+            placeholder="name"
+            
+            name="eventname">
+        
+        <input
+            type="text"
+            id="content"
+            placeholder="room"
+            
+            name="room">
+        
+        <input
+            type="text"
+            id="content"
+            placeholder="date"
+            
+            name="date">
+        
+        <input
+            type="text"
+            id="content"
+            placeholder="time"
+            
+            name="time">
+        
+        <input
+            type="text"
+            id="content"
+            placeholder="comment"
+            
+            name="comment">
+        
+        <input
+            type="text"
+            id="content"
+            placeholder="ADMIN NAME (mandatory)"
+            
+            name="added_by">
+        
+
+        <br>
+        <input
+            type="submit"
+            value="Add All Fields (ADMIN)"
+            style="color: black">
+
+
+        {% if session.get('admin') %}
             <a
                 href="/logout/">
                 LOGOUT
             </a>
-        </h6>
-    {% endif %}
+        {% endif %}
 
-    <h2>github.com/poallele/FlaskJumpstart</h2>
-    <h6>Contact:</h6>
-    <h6>-
-        <a
-            href="mailto:anilforo@montgomerycollege.edu">
-            president</a>
-    </h6>
-    <h6>-
-        <a
-            href="mailto:pogene@montgomerycollege.edu">
-            vice pres, site dev</a>
-    </h6>
+
+    </form>
     
-    <br>
-    
+    <div style="height: 60px;"></div>
+
+
+    <h3>github.com/poallele/FlaskJumpstart</h3>
     <h6>┌───────────────────────100% FREE TOOLS USED──────────────────────┐</h6>
     <h6>
         │TUTORIAL ........................
@@ -80,103 +187,34 @@
     </h6>
     <h6>└─────────────────────────────────────────────────────────────────┘</h6>
     
-    {% if eventsList|length < 1%}
-        <br>
-        <h6>There are no events. Create one below.</h6>
     
-    {% else %}
-        <br>
-        <table>
-            <tr>
-                <th>Event</th>                                      <!--1. This is a comment.-->
-                <th>Room</th>                                       <!--2-->
-                <th>Date</th>                                       <!--3-->
-                <th>Time</th>                                       <!--4-->
-                <th>Comment</th>                                    <!--5-->
-                <th>Actions</th>                                    <!--6-->
-            </tr>
-            {% for i in eventsList %}
-                <tr>
-                    
-                    <td>{{ i.eventname }}</td>                      <!--1-->
-                    <td>{{ i.room }}</td>                           <!--2-->
-                    <td>{{ i.date }}</td>                           <!--3-->
-                    <td>{{ i.time }}</td>                           <!--4-->
-                    <td>{{ i.comment }} </td>                       <!--5-->
-                    
-                    <td>                                            <!--6-->
-                        <a href="/metadata/{{ i.id }}">Metadata</a>
-                        {% if session.get('admin') %}
-                            <br>
-                            <a href="/delete/{{ i.id }}">Delete</a>
-                            <br>
-                            <a href="/modify/{{ i.id }}">Modify</a>
-                        {% endif %}
-                    </td>                                           <!--6-->
-
-                </tr>
-            {% endfor %}
-        </table>
-    {% endif %}
-
-    <form action="/" method="POST">
-        
-        <input
-            type="text"
-            id="content"
-            placeholder="name"
-            
-            name="eventname">
-        
-        <input
-            type="text"
-            id="content"
-            placeholder="room"
-            
-            name="room">
-        
-        <input
-            type="text"
-            id="content"
-            placeholder="date"
-            
-            name="date">
-        
-        <input
-            type="text"
-            id="content"
-            placeholder="time"
-            
-            name="time">
-        
-        <input
-            type="text"
-            id="content"
-            placeholder="comment"
-            
-            name="comment">
-        
-        <input
-            type="text"
-            id="content"
-            placeholder="added by"
-            
-            name="added_by">
-        
-        <input
-            type="submit"
-            value="Add All Fields"
-            style="color: black">
-
-    </form>
-    
-    <div
-        style="height: 100px;">
-    </div>
-    
-    <img src="https://media.montgomerycollege.edu/communications/marketing-communications-website/mclogos/assets/MClogo-horizontal-purple-blue-RGB-no-background.png">
     <br>
-    <br>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/IEEE_logo.svg">
+    <h6>ADMIN CONTACT:</h6>
+    <h6>
+        ★
+        <a
+            href="mailto:anilforo@montgomerycollege.edu">
+            PRESIDENT
+        </a>
+
+        ☆
+        <a
+            href="mailto:pogene@montgomerycollege.edu">
+            VICE PRES || DEV || SYSMAINT
+        </a>
+
+        ◇
+        <a
+            href="mailto:undefined@montgomerycollege.edu">
+            SECRETARY
+        </a>
+
+        ◇
+        <a
+            href="mailto:undefined@montgomerycollege.edu">
+            TREASURER
+        </a>
+    </h6>
+    
 </div>
 {% endblock %}

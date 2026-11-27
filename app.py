@@ -84,7 +84,7 @@ def add():
             return 'There was an issue adding your event'
 
     else:
-        eventsList = Todo.query.order_by(Todo.date_created).all()
+        eventsList = Todo.query.order_by(Todo.id).all()
         return render_template('index.html', eventsList=eventsList)
 
 ################################################################################
@@ -149,6 +149,44 @@ def metadata(id):
             return 'There was an issue updating your event'
     else:
         return render_template('metadata.html', event=event)
+    
+################################################################################
+@app.route('/up/<int:id>', methods=['GET', 'POST'])
+def up(id):
+    if not session.get('admin'):
+        return redirect('/login/')
+
+    event = Todo.query.get_or_404(id)
+    other = Todo.query.get(id - 1)
+
+    if other:
+        event.id = -1
+        db.session.commit()
+        other.id = id
+        db.session.commit()
+
+    event.id = id - 1
+    db.session.commit()
+    return redirect('/')
+    
+################################################################################
+@app.route('/down/<int:id>', methods=['GET', 'POST'])
+def down(id):
+    if not session.get('admin'):
+        return redirect('/login/')
+
+    event = Todo.query.get_or_404(id)
+    other = Todo.query.get(id + 1)
+
+    if other:
+        event.id = -1
+        db.session.commit()
+        other.id = id
+        db.session.commit()
+
+    event.id = id + 1
+    db.session.commit()
+    return redirect('/')
 
 ################################################################################
 if __name__ == "__main__":
