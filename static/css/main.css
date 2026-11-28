@@ -50,7 +50,7 @@ td {
 .background {
     background: #000000 url(/static/img/IEEE_MB_black_RGB_72ppi.png);
     padding: 84px;
-    min-height: 100%;
+    min-height: 50vh;
     box-sizing: border-box;
 }
 
