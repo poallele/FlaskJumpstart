@@ -54,7 +54,6 @@ td {
     margin: 0 auto;
     width: 50%;
     min-width: 500px;
-    
 }
 #content {
     width: 98.9%;
@@ -62,10 +61,20 @@ td {
 }
 
 
-
-
-
 a {
     color: rgb(0, 149, 200);
     font-weight: normal;
+}
+
+
+
+
+.ascii-box {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 12px;
+    line-height: 1.2;
+    overflow-x: auto;           /* Allows horizontal scrolling instead of wrapping on tiny screens */
+    -webkit-text-size-adjust: 100%; /* Stops iOS Safari from inflating the font size */
+    text-size-adjust: 100%;
+    white-space: pre;           /* Forces exact spacing without wrapping */
 }
