@@ -53,6 +53,8 @@ td {
 .content {
     margin: 0 auto;
     width: 50%;
+    min-width: 500px;
+    
 }
 #content {
     width: 98.9%;
