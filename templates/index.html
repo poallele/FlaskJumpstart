@@ -71,64 +71,72 @@
 
         <div style="height: 2px;"></div>
 
+        {% if session.get('admin') %}
+            <form action="/" method="POST">
+                
+                <input
+                    type="text"
+                    id="content"
+                    placeholder="name"
+                    
+                    name="eventname">
+                
+                <input
+                    type="text"
+                    id="content"
+                    placeholder="room"
+                    
+                    name="room">
+                
+                <input
+                    type="text"
+                    id="content"
+                    placeholder="date"
+                    
+                    name="date">
+                
+                <input
+                    type="text"
+                    id="content"
+                    placeholder="time"
+                    
+                    name="time">
+                
+                <input
+                    type="text"
+                    id="content"
+                    placeholder="comment"
+                    
+                    name="comment">
+                
+                <input
+                    type="text"
+                    id="content"
+                    placeholder="ADMIN NAME (mandatory)"
+                    
+                    name="added_by">
+                
 
-        <form action="/" method="POST">
+                <br>
+                <input
+                    type="submit"
+                    value="Add All Fields"
+                    style="color: black">
             
-            <input
-                type="text"
-                id="content"
-                placeholder="name"
-                
-                name="eventname">
-            
-            <input
-                type="text"
-                id="content"
-                placeholder="room"
-                
-                name="room">
-            
-            <input
-                type="text"
-                id="content"
-                placeholder="date"
-                
-                name="date">
-            
-            <input
-                type="text"
-                id="content"
-                placeholder="time"
-                
-                name="time">
-            
-            <input
-                type="text"
-                id="content"
-                placeholder="comment"
-                
-                name="comment">
-            
-            <input
-                type="text"
-                id="content"
-                placeholder="ADMIN NAME (mandatory)"
-                
-                name="added_by">
-            
-
-            <br>
-            <input
-                type="submit"
-                value="Add All Fields (ADMIN)"
-                style="color: black">
-
+            {% endif %}
 
             {% if session.get('admin') %}
                 <a
                     href="/logout/">
                     LOGOUT
                 </a>
+
+            {% else %}
+                <a
+                    href="/login/">
+                    LOGIN
+                </a>
+
             {% endif %}
 
 
@@ -190,30 +198,38 @@
         
         <br>
         <h6>ADMIN CONTACT:</h6>
+        
         <h6>
             ★
             <a
                 href="mailto:anilforo@montgomerycollege.edu">
                 PRESIDENT
             </a>
-
+        </h6>
+        
+        <h6>
             ☆
             <a
                 href="mailto:pogene@montgomerycollege.edu">
                 VICE PRES || DEV || SYSMAINT
             </a>
-
+        </h6>
+        
+        <h6>
             ◇
             <a
                 href="mailto:undefined@montgomerycollege.edu">
                 SECRETARY
             </a>
-
+        </h6>
+        
+        <h6>
             ◇
             <a
                 href="mailto:undefined@montgomerycollege.edu">
                 TREASURER
             </a>
+        
         </h6>
     </div>
 </div>

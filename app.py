@@ -73,7 +73,7 @@ def add():
             date=request.form['date'],
             time=request.form['time'],
             comment=request.form['comment'],
-            added_by=request.form['comment']
+            added_by=request.form['added_by']
         )
 
         try:
@@ -116,7 +116,7 @@ def modify(id):
         event.date      = request.form['date']
         event.time      = request.form['time']
         event.comment   = request.form['comment']
-        event.added_by  = request.form['comment']
+        event.added_by  = request.form['added_by']
 
         try:
             db.session.commit()
@@ -129,18 +129,17 @@ def modify(id):
 ################################################################################
 @app.route('/metadata/<int:id>', methods=['GET', 'POST'])
 def metadata(id):
+    
     event = Todo.query.get_or_404(id)
 
     if request.method == 'POST':
-        if not session.get('admin'):
-            return redirect('/login/')
 
         event.eventname = request.form['eventname']
         event.room      = request.form['room']
         event.date      = request.form['date']
         event.time      = request.form['time']
         event.comment   = request.form['comment']
-        event.added_by  = request.form['comment']
+        event.added_by  = request.form['added_by']
 
         try:
             db.session.commit()
