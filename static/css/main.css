@@ -8,7 +8,7 @@ body, html {
 
 
 
-h1,h3 {
+h1,legend,span {
     color: rgb(255, 255, 255);
     margin-top: 0;
     margin-bottom: 0;
@@ -47,14 +47,22 @@ td {
 }
 
 
-
-
+.background {
+    background: #000000 url(/static/img/IEEE_MB_black_RGB_72ppi.png);
+    padding: 84px;
+    min-height: 84vh;
+    box-sizing: border-box;
+}
 
 .content {
+    background-color: #000000;
+    padding: 20px;
+    
     margin: 0 auto;
     width: 50%;
     min-width: 500px;
 }
+
 #content {
     width: 98.9%;
     border: 2px solid rgb(102, 102, 102);
@@ -69,12 +77,31 @@ a {
 
 
 
-.ascii-box {
-    font-family: "Courier New", Courier, monospace;
-    font-size: 12px;
-    line-height: 1.2;
-    overflow-x: auto;           /* Allows horizontal scrolling instead of wrapping on tiny screens */
-    -webkit-text-size-adjust: 100%; /* Stops iOS Safari from inflating the font size */
-    text-size-adjust: 100%;
-    white-space: pre;           /* Forces exact spacing without wrapping */
+.tools-box {
+  border: 1px solid #fff;
+  font-family: monospace;
+  padding: 10px 15px;
+}
+
+.tools-box legend {
+  text-align: center;
+  padding: 0 8px;
+}
+
+.tools-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tools-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.tools-list a {
+  text-align: right;
+  word-break: break-all; /* Prevents long URLs from breaking mobile screens */
 }

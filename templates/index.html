@@ -6,11 +6,13 @@
 
 {% block body %}
 
-<div style="background: #000000 url(/static/img/IEEE_MB_black_RGB_72ppi.png); padding: 84px; min-height: 84vh; box-sizing: border-box;">
-    <div class="content" style="background-color: #000000; padding: 20px; min-height: calc(100vh - 40px);">
+<div class="background">
+    <div class="content">
         <img style="width: 66%" src="/static/img/MClogo-horizontal-purple-blue-RGB-no-background.png">
         <img style="width: 32%" src="/static/img/ieee-ar21.svg">
         
+        <br>
+
         {% if eventsList|length < 1%}
             <br>
             <h6>There are no events. Create one below.</h6>
@@ -37,23 +39,30 @@
                         <td>                                            <!--6-->
                             {% if session.get('admin') %}
                                 <a
-                                href="/up/{{ i.id }}"
-                                style="text-decoration: none; color: rgb(102, 102, 102)">
-                                ▲
+                                    href="/up/{{ i.id }}"
+                                    style="text-decoration: none; color: rgb(102, 102, 102)">
+                                    ▲
                                 </a><br>
                             
+                                
+
                                 <a
                                     href="/delete/{{ i.id }}">
                                     DELETE
                                 </a><br>
 
+
+
                                 <a
                                     href="/modify/{{ i.id }}">
                                     MODIFY
                                 </a><br>
-                            {% endif %}
                             
-                            <a href="/metadata/{{ i.id }}">METADATA</a><br>
+                            {% endif %}
+                            <a
+                                href="/metadata/{{ i.id }}">
+                                METADATA
+                            </a><br>
                             
                             {% if session.get('admin') %}
                             <a
@@ -142,97 +151,159 @@
 
         </form>
         
-        <div style="height: 60px;"></div>
-
-
-        <h3>github.com/poallele/FlaskJumpstart</h3>
-        <pre class="ascii-box">
-            <h6>┌───────────────────────100% FREE TOOLS USED──────────────────────┐</h6>
-            <h6>
-                │TUTORIAL ........................
-                <a
-                    href="https://youtube.com/watch?v=Z1RJmh_OqeA">
-                    youtube.com/watch?v=Z1RJmh_OqeA</a>│
-            </h6>
-            
-
-            <h6>
-                │├─vscode .........................
-                <a
-                    href="https://code.visualstudio.com/download">
-                    code.visualstudio.com/download</a>│
-            </h6>
-            
-            
-            <h6>
-                │├─python ...................................
-                <a
-                    href="https://python.org/downloads">
-                    python.org/downloads</a>│
-            </h6>
-            
-            
-            <h6>
-                │├─flask. .......
-                <a
-                    href="https://flask.palletsprojects.com/en/stable/installation">
-                    flask.palletsprojects.com/en/stable/installation</a>│
-            </h6>
-            
-            
-            <h6>
-                │├─github ......................................
-                <a
-                    href="https://github.com/signup">
-                    github.com/signup</a>│
-            </h6>
-            
-            
-            <h6>
-                │├─render ..........................
-                <a
-                    href="https://dashboard.render.com/register">
-                    dashboard.render.com/register</a>│
-            </h6>
-            <h6>└─────────────────────────────────────────────────────────────────┘</h6>
-        </pre>
+        <div style="height: 80px;"></div>
         
-        
+        <fieldset class="tools-box">
+            <legend>ADMIN CONTACT</legend>
+            <ul class="tools-list">
+                
+                
+                <li>
+                    <span>
+                        ★ PRESIDENT
+                    </span>
+
+                    <a
+                        href="mailto:anilforo@montgomerycollege.edu">
+                        anilforo@montgomerycollege.edu
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <span>
+                        ☆ VICE PRES || DEV || SYSMAINT
+                    </span>
+
+                    <a
+                        href="mailto:pogene@montgomerycollege.edu">
+                        pogene@montgomerycollege.edu
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <span>
+                        ◇ SECRETARY
+                    </span>
+
+                    <a
+                        href="mailto:undefined@montgomerycollege.edu">
+                        undefined@montgomerycollege.edu
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <span>
+                        ◇ TREASURER
+                    </span>
+
+                    <a
+                        href="mailto:undefined@montgomerycollege.edu">
+                        undefined@montgomerycollege.edu
+                    </a>
+                </li>
+
+
+            </ul>
+        </fieldset>
+
         <br>
-        <h6>ADMIN CONTACT:</h6>
         
-        <h6>
-            ★
-            <a
-                href="mailto:anilforo@montgomerycollege.edu">
-                PRESIDENT
-            </a>
-        </h6>
-        
-        <h6>
-            ☆
-            <a
-                href="mailto:pogene@montgomerycollege.edu">
-                VICE PRES || DEV || SYSMAINT
-            </a>
-        </h6>
-        
-        <h6>
-            ◇
-            <a
-                href="mailto:undefined@montgomerycollege.edu">
-                SECRETARY
-            </a>
-        </h6>
-        
-        <h6>
-            ◇
-            <a
-                href="mailto:undefined@montgomerycollege.edu">
-                TREASURER
-            </a>
-        
-        </h6>
+        <fieldset class="tools-box">
+            <legend>100% FREE TOOLS USED</legend>
+            
+            <ul class="tools-list">
+                
+                <li>
+                    <span>
+                        TUTORIAL
+                    </span>
+                    
+                    <a
+                        href="https://youtube.com">
+                        youtube.com/watch?v=Z1RJmh_OqeA
+                    </a>
+                </li>
+                
+
+                <li>
+                    <span>
+                        ├─vscode
+                    </span>
+                    
+                    <a
+                        href="https://visualstudio.com">
+                        code.visualstudio.com/download
+                    </a>
+                </li>
+                
+
+                <li>
+                    <span>
+                        ├─python
+                    </span>
+                    
+                    <a
+                        href="https://python.org">
+                        python.org/downloads
+                    </a>
+                </li>
+                
+
+                <li>
+                    <span>
+                        ├─flask
+                    </span>
+                    
+                    <a
+                        href="https://palletsprojects.com">
+                        flask.palletsprojects.com/en/stable/installation
+                    </a>
+                </li>
+                
+
+                <li>
+                    <span>
+                        ├─github
+                    </span>
+                    
+                    <a
+                        href="https://github.com">
+                        github.com/signup
+                    </a>
+                </li>
+                
+
+                <li>
+                    <span>
+                        ├─render
+                    </span>
+                    
+                    <a
+                        href="https://render.com">
+                        dashboard.render.com/register
+                    </a>
+                </li>
+
+                <br>
+
+                <li>
+                    <span
+                        style="color: rgb(81, 35, 127)">
+                        𝑪𝑳𝑶𝑵𝑬 𝑻𝑯𝑰𝑺 𝑨𝑷𝑷 𝑭𝑶𝑹 𝒀𝑶𝑼𝑹 𝑶𝑾𝑵 𝑪𝑳𝑼𝑩
+                    </span>
+                    
+                    <a
+                        href="https://github.com/poallele/FlaskJumpstart/fork">
+                        github.com/poallele/FlaskJumpstart/fork
+                    </a>
+                </li>
+
+            </ul>
+        </fieldset>
+
     </div>
 </div>
 {% endblock %}
