@@ -5,6 +5,7 @@ from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 import os
 
@@ -30,7 +31,10 @@ class Todo(db.Model):
     time         = db.Column(db.String(200), default="")
     comment      = db.Column(db.String(200), default="")
     added_by     = db.Column(db.String(200), default="")
-    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    date_created = db.Column(db.DateTime, default=lambda: datetime.now(ZoneInfo("America/New_York")).replace(tzinfo=None))
+
+with app.app_context():
+    db.create_all()
 
 ################################################################################
 @app.route('/login/', methods=['POST', 'GET'])
@@ -71,20 +75,21 @@ def add():
             return redirect('/login/')
 
         new_event = Todo(
-            eventname=request.form['eventname'],
-            room=request.form['room'],
-            date=request.form['date'],
-            time=request.form['time'],
-            comment=request.form['comment'],
-            added_by=request.form['added_by']
+            eventname=request.form.get('eventname', ''),
+            room=request.form.get('room', ''),
+            date=request.form.get('date', ''),
+            time=request.form.get('time', ''),
+            comment=request.form.get('comment', ''),
+            added_by=request.form.get('added_by', '')
         )
 
         try:
             db.session.add(new_event)
             db.session.commit()
             return redirect('/')
-        except:
-            return 'There was an issue adding your event'
+        except Exception as e:
+            db.session.rollback()
+            return f'There was an issue adding your event: {e}'
 
     else:
         eventsList = Todo.query.order_by(Todo.id).all()
@@ -102,8 +107,8 @@ def delete(id):
         db.session.delete(event)
         db.session.commit()
         return redirect('/')
-    except:
-        return 'There was a problem deleting that event'
+    except Exception as e:
+        return f'There was an issue removing your event: {e}'
 
 ################################################################################
 @app.route('/modify/<int:id>', methods=['GET', 'POST'])
@@ -119,36 +124,37 @@ def modify(id):
         event.date      = request.form['date']
         event.time      = request.form['time']
         event.comment   = request.form['comment']
-        event.added_by  = request.form['added_by']
 
         try:
             db.session.commit()
             return redirect('/')
-        except:
-            return 'There was an issue updating your event'
+        except Exception as e:
+            return f'There was an issue modifying your event: {e}'
     else:
         return render_template('modify.html', event=event)
 
 ################################################################################
 @app.route('/metadata/<int:id>', methods=['GET', 'POST'])
 def metadata(id):
-    
     event = Todo.query.get_or_404(id)
 
     if request.method == 'POST':
+        if not session.get('admin'):
+            return redirect('/login/')
 
-        event.eventname = request.form['eventname']
-        event.room      = request.form['room']
-        event.date      = request.form['date']
-        event.time      = request.form['time']
-        event.comment   = request.form['comment']
-        event.added_by  = request.form['added_by']
+        event.eventname = request.form.get('eventname', '')
+        event.room      = request.form.get('room', '')
+        event.date      = request.form.get('date', '')
+        event.time      = request.form.get('time', '')
+        event.comment   = request.form.get('comment', '')
+        event.added_by  = request.form.get('added_by', '')
 
         try:
             db.session.commit()
             return redirect('/')
-        except:
-            return 'There was an issue updating your event'
+        except Exception as e:
+            db.session.rollback()
+            return f'There was an issue updating the metadata of your event: {e}'
     else:
         return render_template('metadata.html', event=event)
     
@@ -159,17 +165,23 @@ def up(id):
         return redirect('/login/')
 
     event = Todo.query.get_or_404(id)
-    other = Todo.query.get(id - 1)
+    other = Todo.query.filter(Todo.id < id).order_by(Todo.id.desc()).first()
 
-    if other:
+    if not other:
+        return redirect('/')
+
+    try:
+        target_id = other.id
         event.id = -1
         db.session.commit()
         other.id = id
         db.session.commit()
-
-    event.id = id - 1
-    db.session.commit()
-    return redirect('/')
+        event.id = target_id
+        db.session.commit()
+        return redirect('/')
+    except Exception as e:
+        db.session.rollback()
+        return f'There was an issue moving your event up: {e}'
     
 ################################################################################
 @app.route('/down/<int:id>', methods=['GET', 'POST'])
@@ -178,26 +190,27 @@ def down(id):
         return redirect('/login/')
 
     event = Todo.query.get_or_404(id)
-    other = Todo.query.get(id + 1)
+    other = Todo.query.filter(Todo.id > id).order_by(Todo.id.asc()).first()
 
-    if other:
+    if not other:
+        return redirect('/')
+
+    try:
+        target_id = other.id
         event.id = -1
         db.session.commit()
         other.id = id
         db.session.commit()
-
-    event.id = id + 1
-    db.session.commit()
-    return redirect('/')
+        event.id = target_id
+        db.session.commit()
+        return redirect('/')
+    except Exception as e:
+        db.session.rollback()
+        return f'There was an issue moving your event down: {e}'
 
 ################################################################################
 if __name__ == "__main__":
+    app.run(debug=True)
     
     #python -m pip freeze > requirements.txt
     #python -c "import secrets; from argon2 import PasswordHasher; print('FLASK_SECRET_KEY:', secrets.token_hex(32)); print('ADMIN_PASSWORD_HASH:', PasswordHasher().hash('PUT_YOUR_REAL_PASSWORD_HERE'))"
-
-    
-    with app.app_context():
-        db.create_all()
-
-    app.run(debug=True)
